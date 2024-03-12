@@ -17,13 +17,16 @@ export default {
     data(){
         return{
             serieInfo: [],
+            series: [],
             url: '',
             size: 'standard_fantastic.jpg'
         }
     },
     mounted(){
         this.getSerieById();
+        
     },
+  
     methods: {
         getSerieById: function () {
             var serieId = this.$route.params.id;
@@ -38,7 +41,9 @@ export default {
                 .catch((error)=> {
                     console.log(error)
                 })
-        }
+        },
+        
+
     }
 }
 </script>
