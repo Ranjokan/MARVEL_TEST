@@ -2,9 +2,8 @@
     <div>
         <h3>THIS IS MARVELSERIES.VUE</h3>
         <ul>
-            <li v-for="serie in series">
-                {{ serie.title }}
-
+            <li v-for="serie in series">               
+                <router-link :to="{name: 'serie' , params: {id: serie.id}}">{{ serie.title }}</router-link>   
             </li>
         </ul>
     </div>
