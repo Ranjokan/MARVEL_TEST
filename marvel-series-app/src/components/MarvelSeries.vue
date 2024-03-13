@@ -5,7 +5,7 @@
     href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
     rel="stylesheet">
   <div>
-    
+
     <div class="row" v-for="(row, index) in rows" :key="index">
       <div class="column" v-for="(serie, serieIndex) in row" :key="serieIndex">
         <div class="series-card">
@@ -25,19 +25,22 @@
             <img v-else src="../assets/icon-unknown.png">
           </div>
           <div>
-            <router-link :to="{ name: 'serie', params: { id: serie.id } }"><button class="details-button">Details</button></router-link> 
+            <router-link :to="{ name: 'serie', params: { id: serie.id } }"><button
+                class="details-button">Details</button></router-link>
           </div>
+        </div>
+        <div v-if="loading" class="flex justify-center">
+          <loader />
         </div>
       </div>
     </div>
-
-
   </div>
 </template>
 
 <script>
 import { useSeriesStore } from '@/store/series';
-import { defineComponent, computed } from 'vue';
+import { defineComponent, computed, onMounted, onUnmounted } from 'vue';
+import Loader from '../components/Loader.vue'
 
 
 
@@ -49,13 +52,19 @@ export default {
     };
   },
   mounted() {
-
+    useSeriesStore.offset = 0
   },
+
   setup() {
     const seriesStore = useSeriesStore();
-    const thumbnailSizeM = 'standard_fantastic.jpg'
+    const thumbnailSizeM = 'portrait_medium.jpg'
     seriesStore.getSeries();
     const seriesComputed = computed(() => seriesStore.series);
+
+    const loading = seriesStore.loading;
+    const error = seriesStore.error;
+    const offset = seriesStore.offset
+
     console.log(seriesComputed)
     const rows = computed(() => {
       const cardsPerRow = 3;
@@ -63,21 +72,49 @@ export default {
         { length: Math.ceil(seriesComputed.value.length) / cardsPerRow },
         (_, index) => seriesComputed.value.slice(index * cardsPerRow, (index + 1) * cardsPerRow)
       )
-    })
+    });
+
+    onMounted(() => {
+      loadSeries();
+      window.addEventListener('scroll', handleScroll);
+    });
+
+    onUnmounted(() => {
+      window.removeEventListener('scroll', handleScroll);
+    });
+
+    const loadSeries = () => {
+      if (loading.value || error.value) return;
+
+      seriesStore.setLoading(true);
+      try {
+        seriesStore.loadSeries();
+      } catch (err) {
+        seriesStore.setError(err.message);
+      } finally {
+        seriesStore.setLoading(false);
+      }
+    };
+
+    const handleScroll = () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        loadSeries();
+      }
+    };
 
     return {
       rows,
-      thumbnailSizeM
+      thumbnailSizeM,
+      loading,
+      error
     }
 
   },
   methods: {
-    toggleExpand() {
-      this.isExpanded = true;
-    },
-    readMore(selectedSerie) {
 
-    }
+  }, 
+  components:{
+    Loader
   }
 
 }
@@ -94,7 +131,7 @@ export default {
   padding: 0 10px;
 }
 
-.series-font{
+.series-font {
   font-family: "Comic Neue", cursive;
   font-weight: 700;
   font-style: normal;
@@ -168,11 +205,11 @@ export default {
 .details-button {
   bottom: 10px;
   right: 10px;
-  background-color: #02030C; 
-  color: #ffd900; 
+  background-color: #02030C;
+  color: #ffd900;
   border: 3px solid #ffd900;
   padding: 8px 16px;
-  border-radius: 20px; 
+  border-radius: 20px;
   cursor: pointer;
   transition: opacity 0.3s ease-in-out;
   margin-top: 20px;
@@ -182,7 +219,8 @@ export default {
 
 .details-button:hover {
   background-color: #f75a0a;
-  color: #02030C; 
+  color: #02030C;
   border: 3px solid #02030C;
 }
+
 </style>
