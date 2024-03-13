@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <img alt="Maavel logo" src="../assets/marvel_logo.png">
-  </div>
-  <div>
+    <img alt="Marvel Logo" src="../assets/marvel_logo.png">
     <MarvelSeries />
   </div>
 </template>
@@ -27,7 +25,6 @@ export default {
 <style lang="css">
 .container {
   width: 100%;
-  height: 200px;
   overflow: hidden;
 }
 
