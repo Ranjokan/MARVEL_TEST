@@ -3,5 +3,9 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
+import { createPinia } from 'pinia'
+const app = createApp(App)
+const pinia = createPinia()
 
-createApp(App).use(store).use(router).mount('#app')
+app.use(store).use(router).use(pinia)
+app.mount('#app')
