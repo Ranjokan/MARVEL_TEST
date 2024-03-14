@@ -6,6 +6,7 @@ export const useSeriesStore = defineStore({
     id: 'series',
     state: () => ({
         series: [],
+        serieInfo: [],
         total: 0,
         offset: 20,
         loading: false,
@@ -42,6 +43,15 @@ export const useSeriesStore = defineStore({
                 console.error('Error to get the data', error);
             }finally{
                 this.setLoading(false);  
+            }
+        },
+        async getSeriesById(serieId){
+            try{
+                const response = await axios.get(`https://gateway.marvel.com/v1/public/series?${serieId}&apikey=${public_key}`)
+                this.serieInfo = response.data.data.results;
+            }catch (error){
+                this.setError(error.message);
+                console.error('Error to get the data', error);
             }
         }
     },

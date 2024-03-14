@@ -63,7 +63,6 @@ export default {
 
     const loading = seriesStore.loading;
     const error = seriesStore.error;
-    const offset = seriesStore.offset
 
     console.log(seriesComputed)
     const rows = computed(() => {
@@ -169,32 +168,6 @@ export default {
   font-weight: 700;
   font-style: normal;
   color: #f8b007;
-}
-
-
-.related-resources {
-  margin-top: 10px;
-}
-
-.related-resources ul {
-  padding-left: 20px;
-}
-
-.related-resources ul li {
-  margin-bottom: 5px;
-}
-
-.related-resources a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.description {
-  overflow: hidden;
-  text-overflow: clip;
-  white-space: break-spaces;
-  max-height: 3em;
-  font-size: small;
 }
 
 .expanded {
