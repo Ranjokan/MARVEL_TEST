@@ -39,12 +39,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
         </div>
 
     </div>
@@ -134,7 +128,7 @@ export default {
 
 .left-column {
     justify-content: center;
-    align-items: center;
+    margin: auto;
 }
 
 .series-image {

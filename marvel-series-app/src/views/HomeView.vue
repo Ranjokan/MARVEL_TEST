@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <img alt="Marvel Logo" src="../assets/marvel_logo.png">
     <MarvelSeries />
   </div>
 </template>

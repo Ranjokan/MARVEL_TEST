@@ -4,8 +4,10 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
     rel="stylesheet">
-  <div>
-
+  <div class="container mx-auto px-4" style="background-image: url('src/assets/background.jpg');">
+    <div class="flex flex-col p-8">
+      <p class="title">Marvel Series</p>
+    </div>
     <div class="row" v-for="(row, index) in rows" :key="index">
       <div class="column" v-for="(serie, serieIndex) in row" :key="serieIndex">
         <div class="series-card">
@@ -111,8 +113,8 @@ export default {
   },
   methods: {
 
-  }, 
-  components:{
+  },
+  components: {
     Loader
   }
 
@@ -128,6 +130,16 @@ export default {
 .column {
   flex: 33.33%;
   padding: 0 10px;
+}
+
+.title {
+  margin-bottom: 1.5rem;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: #02030C;
 }
 
 .series-font {
@@ -195,5 +207,4 @@ export default {
   color: #02030C;
   border: 3px solid #02030C;
 }
-
 </style>
